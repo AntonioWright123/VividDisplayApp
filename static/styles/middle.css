@@ -1,0 +1,171 @@
+/* Main section layout */
+.mid-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Pushes left and right sides apart */
+  flex-wrap: nowrap;
+  width: 100%; /* Ensures it spans the full width */
+  height: 1150px; /* Set the height for the mid-section */
+  padding-top: 70px;
+  background-color: black;
+  background-color: black; /* Ensures background color is black */
+  background-image: url('/static/brick-wall.png');
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: fixed;
+  opacity: 0.70;
+
+
+}
+
+/* Left and right side styling */
+.left-side, .right-side {
+
+  height: 100%; /* Ensures both sides take up the full height of the mid-section */
+  background-color: black; /* Ensures background color is black */
+  background-image: url('/static/brick-wall.png');
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: fixed;
+  opacity: 0.98;
+}
+
+/* Left side specific styling */
+.left-side {
+   flex: 3;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: flex-start;
+   margin-left: 30px;
+   padding-left: 20px;
+
+
+}
+
+/* Right side specific styling */
+.right-side {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    align-items: center;
+    justify-content: center; /* Vertically center the content */
+    width: 60%; /* Adjust the width for the right side */
+
+    background-color: black;
+}
+
+/* Placeholder for centered content inside left-side */
+
+.img-placeholder {
+    width: 100%;
+    max-width: 650px;         /* Adjust width to control how big it looks */
+    aspect-ratio: 3 / 4;      /* Portrait shape */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #141414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 220px;
+    border-bottom: 3px solid rgb(255, 10, 10);
+    border-top: 3px solid rgb(255, 10, 10);
+}
+
+.default-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Ensures text color is visible */
+}
+
+.disclaimer-text {
+    display: flex;
+    color: white;
+    margin-top: 20px;
+}
+.mid-logo {
+  height: 380px;
+  width: auto;
+  margin-bottom: 20px;
+
+}
+
+/* Logo and label inside the right side */
+.logo-and-label {
+  object-fit: cover;
+  border-bottom: 2px solid rgb(255, 10, 10);
+  margin-bottom: 15px;
+  color: white; /* Ensures text color is white for visibility */
+  padding-top: 200px;
+}
+
+/* Socials section inside the right side */
+.socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  border-left: 2px solid rgb(255, 10, 10);
+  margin-right: 10px;
+  margin-bottom: 100px;
+}
+
+/* Instagram section inside the right side */
+.instagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 40px;
+  color: white;
+}
+
+/* Instagram logo inside Instagram section */
+.instagram-logo {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-right: 40px;
+  width: 80px; /* Shrinks to 50% of its parent container */
+  height: 80px; /* Maintains aspect ratio */
+}
+
+/* TikTok section inside the right side */
+.tiktok {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-size: 40px;
+  color: white;
+}
+
+/* TikTok logo inside TikTok section */
+.tiktok-logo {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-left: 0;
+  padding-left: 5px;
+  left: 0;
+  width: 175px; /* Shrinks to 50% of its parent container */
+  height: 90px; /* Maintains aspect ratio */
+}
+
+/* Default text styling */
+
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+
+#main-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

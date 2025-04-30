@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+
+# PyInstaller & builds
+build/
+dist/
+*.spec
+*.zip
+*.pkg
+*.app
+*.dmg
+*.exe
+*.log
+
+# macOS system files
+.DS_Store

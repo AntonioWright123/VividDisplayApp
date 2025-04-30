@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Shoot and Session</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: rgb(255, 10, 10);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .moving-wall {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            background-color: #000;
+        }
+
+        .wall-track {
+            display: flex;
+            animation: scroll 60s linear infinite;
+        }
+
+        .top-wall .wall-track {
+            animation-name: scrollRight;
+        }
+
+        .bottom-wall .wall-track {
+            animation-name: scrollLeft;
+        }
+
+        .moving-wall img {
+            height: 100%;
+            width: auto;
+            margin: 0;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .selection-ui {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            padding: 2rem;
+        }
+
+        .container {
+            background-color: #171616;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(230, 10, 10, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: rgb(255, 10, 10);
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        select, button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        select {
+            background-color: rgb(255, 10, 10);
+            color: black;
+            border: 1px solid rbg(255, 10, 10);
+        }
+
+        button {
+            background-color: #121010;
+            color: rgb(255, 10, 10);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: #ff4d6d;
+        }
+    </style>
+    <script>
+        function reloadShoot() {
+            const shoot = document.getElementById('shoot_name').value;
+            if (shoot) {
+                window.location.href = `/select?shoot_name=${shoot}`;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Top wall -->
+    <div class="moving-wall top-wall">
+        <div class="wall-track">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2081.JPG" alt="Image 2">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2085.JPG" alt="Image 3">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 4">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2126.JPG" alt="Image 5">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2127.JPG" alt="Image 6">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 13">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <!-- Duplicate images to create infinite scroll -->
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2081.JPG" alt="Image 2">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2085.JPG" alt="Image 3">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 4">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2126.JPG" alt="Image 5">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2127.JPG" alt="Image 6">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 13">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+        </div>
+    </div>
+
+    <!-- Center selection form -->
+    <div class="selection-ui">
+        <div class="container">
+            <h1>📸 Select a Shoot</h1>
+            <form id="select-form" method="POST" action="/start_watch">
+                <label for="shoot_name">Shoot:</label>
+                <select name="shoot_name" id="shoot_name" required onchange="reloadShoot()">
+                    <option value="">-- Select Shoot --</option>
+                    {% for shoot in shoots %}
+                        <option value="{{ shoot }}" {% if selected_shoot == shoot %}selected{% endif %}>{{ shoot }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if sessions %}
+                    <label for="session_name">Session:</label>
+                    <select name="session_name" id="session_name" required>
+                        <option value="">-- Select Session --</option>
+                        {% for session in sessions %}
+                            <option value="{{ session }}">{{ session }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit">Start Watching</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom wall -->
+    <div class="moving-wall bottom-wall">
+        <div class="wall-track">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2081.JPG" alt="Image 2">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2085.JPG" alt="Image 3">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 4">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2126.JPG" alt="Image 5">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2127.JPG" alt="Image 6">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 13">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <!-- Duplicate images to create infinite scroll -->
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2081.JPG" alt="Image 2">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2085.JPG" alt="Image 3">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 4">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2126.JPG" alt="Image 5">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2127.JPG" alt="Image 6">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 13">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Vivid Image Display</title>
+    <link rel="stylesheet" href="/static/styles/header.css">
+    <link rel="stylesheet" href="/static/styles/middle.css">
+    <link rel="stylesheet" href="/static/styles/bottom.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="left-images">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 1">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2081.JPG" alt="Image 2">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2085.JPG" alt="Image 3">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 4">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2126.JPG" alt="Image 5">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2127.JPG" alt="Image 6">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 13">
+        </div>
+
+        <div class="header-elements">
+            <img class="header-logo" src="/static/VividWebsiteIMG/Headerbar/vividLogo.svg" alt="vividLogoNoWord">
+            <p class="header-name">Vivid's Studios</p>
+        </div>
+
+        <div class="right-images">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2128.JPG" alt="Image 7">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2129.JPG" alt="Image 8">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2130.JPG" alt="Image 9">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2131.JPG" alt="Image 10">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2133.JPG" alt="Image 11">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_2124.JPG" alt="Image 12">
+            <img src="/static/VividWebsiteIMG/Headerbar/IMG_1532.JPG" alt="Image 14">
+        </div>
+</div>
+
+
+    <div class="mid-section">
+        <div class="left-side">
+            <div class="img-placeholder" id="main-preview">
+                <img id="main-preview-img" src="" alt="Main Preview" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                <div class="default-text" id="default-text">
+                    <p class="text">Default Image</p>
+                </div>
+            </div>
+            <div class="disclaimer-text"><p>*The picture above is NOT the final copy</p></div>
+        </div>
+
+        <div class="right-side">
+            <div class="logo-and-label">
+                <img class="mid-logo" src="/static/VividWebsiteIMG/Body/vividfull.svg" alt="fullVividLogo">
+            </div>
+
+            <div class="socials">
+                <div class="instagram">
+                    <img class="instagram-logo" src="/static/VividWebsiteIMG/Body/instagramLogo.png" alt="InstagramLogo">
+                    <p>@Vivid.Snapss</p>
+                </div>
+                <div class="tiktok">
+                    <img class="tiktok-logo" src="/static/VividWebsiteIMG/Body/tiktokLogo.png" alt="tiktokLogo">
+                    <p>@VividSnaps614</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-heading">
+         <h1>Photos from the {{ session_name }} Photoshoot</h1>
+    </div>
+
+
+    <!-- Loop through the images and display each one -->
+    <div class="image-gallery">
+        {% for image in images %}
+        <div class="image-item">
+            <img src="/media/{{ shoot_name }}/{{ session_name }}/{{ image }}" alt="Photo {{ loop.index }}" class="loaded">
+        </div>
+        {% endfor %}
+    </div>
+
+
+<script>
+    const shootName = "{{ shoot_name }}";
+    const sessionName = "{{ session_name }}";
+
+    function connectWebSocket() {
+    const ws = new WebSocket(`ws://${window.location.host}/ws/${shootName}/${sessionName}`);
+
+    ws.onopen = () => console.log("✅ WebSocket connection opened");
+
+    ws.onmessage = function (event) {
+        const filename = event.data;
+        const fullPath = `/media/${filename}`;
+        console.log("📦 WebSocket received:", fullPath);
+
+
+        // # checking for duplication sidecarr mac files
+        const exists = [...document.querySelectorAll('.image-gallery img')]
+            .some(img => img.src.includes(filename));
+        if (exists) {
+            console.log("⚠️ Skipping duplicate:", filename);
+            return;
+        }
+
+        tryLoadImage(fullPath, filename);
+    };
+
+    ws.onclose = () => {
+        console.log("🔌 WebSocket closed. Reconnecting in 3s...");
+        setTimeout(connectWebSocket, 3000);  // <=== RECONNECT automatically!
+    };
+
+    ws.onerror = (err) => {
+        console.error("❌ WebSocket error:", err);
+        ws.close();
+        };
+    }
+
+
+    function tryLoadImage(path, filename, attempts = 0) {
+        const img = new Image();
+        img.src = path;
+
+        img.onload = () => {
+            img.classList.add("loaded");
+
+            const box = document.createElement("div");
+            box.classList.add("image-item");
+            box.appendChild(img);
+
+            document.querySelector(".image-gallery").prepend(box);
+
+            const previewImg = document.getElementById("main-preview-img");
+            const defaultText = document.getElementById("default-text");
+            if (previewImg) {
+                previewImg.src = path;
+                previewImg.style.display = "block";
+            }
+            if (defaultText) {
+                defaultText.style.display = "none";
+            }
+
+            console.log("🖼️ Successfully loaded:", filename);
+        };
+
+        img.onerror = () => {
+            if (attempts <10) {
+                console.log(`⏳ Retry ${attempts + 1}: ${filename}`);
+                setTimeout(() => tryLoadImage(path, filename, attempts + 1), 300);
+            } else {
+                console.warn("❌ Failed to load after retries:", filename);
+            }
+        };
+    }
+
+    connectWebSocket();
+</script>
+
+
+</body></html>
