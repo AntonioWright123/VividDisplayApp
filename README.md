@@ -8,6 +8,24 @@ The project was developed for use with tethered photography workflows and is int
 
 The current implementation supports local image monitoring using JPEG image formats and includes both filesystem event watching and polling-based fallback detection to improve reliability during active sessions.
 
+
+
+
+---
+
+## Screenshots
+
+### Session Selection
+
+![Session Selection](screenshots/select-page.png)
+
+### Live Gallery
+
+![Live Gallery](screenshots/gallery.png)
+
+---
+
+
 ---
 
 ## Current Features
