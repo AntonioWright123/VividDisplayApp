@@ -17,20 +17,17 @@ The current implementation supports local image monitoring using JPEG image form
 
 ### Session Selection
 
-![Session Selection](screenshots/Screenshot 2026-05-09 at 3.30.43 PM.png)
+![Session Selection](screenshots/select-page.png)
 
 ### Live Gallery
 
-![Live Gallery](screenshots/Screenshot 2026-05-09 at 3.32.35 PM.png)
-![Live Gallery](screenshots/Screenshot 2026-05-09 at 3.35.23 PM.png)
-![Live Gallery](screenshots/Screenshot 2026-05-09 at 3.39.06 PM.png)
-![Live Gallery](screenshots/Screenshot 2026-05-09 at 3.39.14 PM.png)
+![Live Gallery](screenshots/gallery-1.png)
 
+![Live Gallery](screenshots/gallery-2.png)
 
-#### Terminal Screenshot
+![Live Gallery](screenshots/gallery-3.png)
 
-![Terminal Screenshot](screenshots/Screenshot 2026-05-09 at 3.39.58 PM.png)
-
+![Live Gallery](screenshots/gallery-4.png)
 
 
 ---
