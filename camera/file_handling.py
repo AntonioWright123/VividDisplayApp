@@ -10,7 +10,29 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-seen_files = set()
+
+# 5s for agressive response, 10 for a med, 15 for slow writes
+processed_files = set()
+recent_events = {}
+CACHE_SECONDS = 10
+
+def should_ignore_file(full_media_path):
+    now = time.monotonic()
+
+    for old_file, seen_time in list(recent_events.items()):
+        if now - seen_time > CACHE_SECONDS:
+            del recent_events[old_file]
+
+    if full_media_path in processed_files:
+        return True
+
+    if full_media_path in recent_events:
+        print(f"⏭️ Skipping duplicate event: {full_media_path}")
+        return True
+
+    recent_events[full_media_path] = now
+    processed_files.add(full_media_path)
+    return False
 
 class NewImageHandler(FileSystemEventHandler):
     def __init__(self, shoot_name, session_name):
@@ -23,7 +45,7 @@ class NewImageHandler(FileSystemEventHandler):
             filename = os.path.basename(event.src_path)
             full_media_path = f"{self.shoot_name}/{self.session_name}/{filename}"
 
-            if full_media_path in seen_files:
+            if should_ignore_file(full_media_path):
                 return
 
             print(f"📝 Detected new file: {filename}, waiting for it to finish writing...")
@@ -47,7 +69,7 @@ class NewImageHandler(FileSystemEventHandler):
                     pass
                 time.sleep(1)  # Check every 1 second
 
-            seen_files.add(full_media_path)
+
 
             print(f"[+] New image: {filename}")
             print(f"[→] Sending to clients: {full_media_path}")
@@ -69,8 +91,7 @@ def poll_for_new_images(handler):
             for fname in os.listdir(handler.session_path):
                 if fname.lower().endswith((".jpg", ".jpeg")):
                     full_media_path = f"{handler.shoot_name}/{handler.session_name}/{fname}"
-                    if full_media_path not in seen_files:
-                        seen_files.add(full_media_path)
+                    if not should_ignore_file(full_media_path):
                         print(f"[+] (Fallback) Found new image: {fname}")
                         asyncio.run(send_to_clients(full_media_path))
         except Exception as e:

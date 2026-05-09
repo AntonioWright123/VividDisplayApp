@@ -70,8 +70,8 @@ async def select_page(request: Request, shoot_name: str = None):
             f for f in os.listdir(shoot_path)
             if os.path.isdir(os.path.join(shoot_path, f)) and f.lower() != "favorites"
         ]
-
-    return templates.TemplateResponse("select.html", {
+    #newer syntax for fastapi "request"
+    return templates.TemplateResponse(request,"select.html", {
         "request": request,
         "shoots": shoots,
         "sessions": sessions,
@@ -112,7 +112,7 @@ async def display_gallery(request: Request, shoot_name: str, session_name: str):
            and not f.startswith('.') and not f.startswith('._')
     ]
 
-    return templates.TemplateResponse("index.html", {
+    return templates.TemplateResponse(request, "index.html", {
         "request": request,
         "shoot_name": shoot_name,
         "session_name": session_name,
@@ -133,11 +133,12 @@ if __name__ == "__main__":
 
     # Wait 2-3 seconds to make sure server actually started
     time.sleep(2)
+    # uncomment below when packaged
+    #if getattr(sys, 'frozen', False):
 
-    if getattr(sys, 'frozen', False):
-        webbrowser.open("http://127.0.0.1:8000/select")
+    webbrowser.open("http://127.0.0.1:8000/select")
 
-    # ✨ NEW PART: Keep the main thread alive forever
+    #  NEW PART: Keep the main thread alive forever
     try:
         while True:
             time.sleep(1)

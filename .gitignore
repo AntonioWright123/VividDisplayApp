@@ -5,9 +5,13 @@ __pycache__/
 # Virtual environments
 .venv/
 
+# Environment files
+.env
+env.txt
 # PyInstaller & builds
 build/
 dist/
+.idea/
 *.spec
 *.zip
 *.pkg
@@ -18,3 +22,4 @@ dist/
 
 # macOS system files
 .DS_Store
+._*

@@ -119,6 +119,11 @@
 
 
     function tryLoadImage(path, filename, attempts = 0) {
+        if (document.querySelector(`[data-filename="${filename}"]`)) {
+        console.log("Skipping duplicate:", filename);
+        return;
+        }
+
         const img = new Image();
         img.src = path;
 
@@ -127,6 +132,7 @@
 
             const box = document.createElement("div");
             box.classList.add("image-item");
+            box.dataset.filename = filename;
             box.appendChild(img);
 
             document.querySelector(".image-gallery").prepend(box);
