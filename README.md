@@ -17,7 +17,7 @@ The current implementation supports local image monitoring using JPEG image form
 
 ### Session Selection
 
-![Session Selection](screenshots/select-page.png)
+![Session Selection](screenshots/[select-page.png](https://github.com/AntonioWright123/VividDisplayApp/edit/master/README.md#:~:text=Screenshot%202026%2D05%2D09%20at%203.30.43%E2%80%AFPM))
 
 ### Live Gallery
 
