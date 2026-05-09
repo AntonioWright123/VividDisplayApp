@@ -17,7 +17,7 @@ The current implementation supports local image monitoring using JPEG image form
 
 ### Session Selection
 
-![Session Selection](screenshots/select-page.png)
+![Session Selection](screenshots/Screenshot 2026-05-09 at 3.30.43 PM.png)
 
 ### Live Gallery
 
