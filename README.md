@@ -29,7 +29,7 @@ The current implementation supports local image monitoring using JPEG image form
 ![Live Gallery](screenshots/gallery-4.png)
 
 ### Terminal
-![Terminal](screenshots/Terminal.png)
+![Terminal](screenshots/terminal.png)
 
 
 ---
