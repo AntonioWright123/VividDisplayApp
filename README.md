@@ -18,7 +18,6 @@ The current implementation supports local image monitoring using JPEG image form
 ### Session Selection
 
 ![Session Selection](screenshots/Screenshot 2026-05-09 at 3.30.43 PM.png)
-
 ### Live Gallery
 
 ![Live Gallery](screenshots/gallery-1.png)
@@ -28,6 +27,9 @@ The current implementation supports local image monitoring using JPEG image form
 ![Live Gallery](screenshots/gallery-3.png)
 
 ![Live Gallery](screenshots/gallery-4.png)
+
+### Terminal
+![Terminal](screenshots/Terminal.png)
 
 
 ---
@@ -81,7 +83,7 @@ The current implementation supports local image monitoring using JPEG image form
 
 ```bash
 git clone <repository-url>
-cd vivid-gallery-original
+cd VividDisplayApp
 ```
 
 ### 2. Create and Activate a Virtual Environment
