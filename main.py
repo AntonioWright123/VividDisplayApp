@@ -127,7 +127,9 @@ if __name__ == "__main__":
     import sys
 
     def start_server():
-        uvicorn.run(app, host="127.0.0.1", port=8000, reload=False)
+        #0.0.0.0 for phone access as well
+        #127.0.0.1 for just macOs
+        uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)
 
     threading.Thread(target=start_server, daemon=True).start()
 
